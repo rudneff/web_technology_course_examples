@@ -1,0 +1,13 @@
+{% extends "incl/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="New Questions">New Questions
+        <a class="hot Questions" href="#">Hot Questions</a>
+    </div>
+    {% for question in questions %}
+        {% include "incl/single_question.html" %}
+    {% endfor %}
+    {% include "incl/pagination.html" %}
+{% endblock content %}
+

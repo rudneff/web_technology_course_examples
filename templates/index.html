@@ -1,0 +1,76 @@
+{% extends "incl/base.html" %}
+{% load static %}
+
+{% block content %}
+      <div class="col-8">
+        <div class= "New Questions">New Questions
+          <a class = "hot Questions"href="#">Hot Questions</a>
+        </div>
+
+          <div class ="row question">
+            <div class = "col-2">
+                <img class = "question_avatar" src="../static/img/some200.jpg">
+                <div>
+                  <button type="button" class="btn btn-outline-danger">&#128077;</button>
+                  <span class="rating"> Likes:5</span>
+                  <button type="button" class="btn btn-outline-warning">&#128078;</button>
+                </div>
+            </div>
+            <div class = "col-10">
+              <a class = "question link" href="question.html">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</a>
+                <div class = "text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos aspernatur, atque at
+                  veritatis labore nisi deserunt suscipit, reprehenderit placeat doloribus neque sequi illo
+                  aperiam reiciendis quod autem explicabo. Cum, ullam! Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Dolores impedit laboriosam veritatis temporibus non delectus quibusdam vel. Harum cum mollitia obcaecati? Inventore aut quasi cum voluptates nam magni in laborum.
+                </div>
+                <div class = "under question">
+                  <a class = "answers" href="question.html">Answers (3)</a>
+                  <span class = "tags">Tags:</span>
+                  <a href = "tag_search.html">Help me</a>
+                  <a href = "#">This is hard</a>
+                </div>
+              </div>
+
+        </div>
+        <div class ="row question">
+          <div class = "col-2">
+              <img class = "question_avatar" src="../static/img/some200.jpg">
+              <div>
+                <button type="button" class="btn btn-outline-danger">&#128077;</button>
+                <span class="rating"> Likes:5</span>
+                <button type="button" class="btn btn-outline-warning">&#128078;</button>
+              </div>
+          </div>
+          <div class = "col-10">
+            <a class = "question link" href="question.html">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</a>
+              <div class = "text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos aspernatur, atque at
+                veritatis labore nisi deserunt suscipit, reprehenderit placeat doloribus neque sequi illo
+                aperiam reiciendis quod autem explicabo. Cum, ullam! Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Dolores impedit laboriosam veritatis temporibus non delectus quibusdam vel. Harum cum mollitia obcaecati? Inventore aut quasi cum voluptates nam magni in laborum.
+              </div>
+              <div class = "under question">
+                <a class = "answers" href="question.html">Answers (3)</a>
+                <span class = "tags">Tags:</span>
+                <a href = "tag_search.html">Help me</a>
+                <a href = "#">This is hard</a>
+              </div>
+            </div>
+      </div>
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">2</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
+      </div>
+{% endblock content %}
+
