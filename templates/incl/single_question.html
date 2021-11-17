@@ -2,7 +2,7 @@
 
 <div class="row question">
     <div class="col-2">
-        <div><img class="question_avatar" src="{% static "img/some200.jpg" %}"></div>
+        <div><img class="question_avatar" src="{% static "img/image200.jpg" %}"></div>
         <div>
             <button type="button" class="btn btn-outline-danger">&#128077;</button>
             <span class="rating"> Likes:5</span>
@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="col-10">
-        <a class="question link" href="{% url "question" question.number %}">{{ question.title }}</a>
+        <a class="question link" href="{% url 'question' question.number %}">{{ question.title }}</a>
         <div class="text">{{ question.text }}
         </div>
         <div class="under question">
