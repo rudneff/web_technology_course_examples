@@ -23,6 +23,7 @@ urlpatterns = [
     path('hot/', views.hot, name="hot"),
     path('question/<int:number>', views.question, name="question"),
     path('new/', views.index, name="new"),
+    path('login/', views.login, name='login'),
     path('', views.index, name="index")
 ]
 

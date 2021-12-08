@@ -1,9 +1,8 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
 # Create your views here.
 from django.views import generic
 
-from .models import Book, Author, BookInstance, Genre
+from .models import Book, Author, BookInstance
 
 
 def index(request):
@@ -34,5 +33,3 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
-
-
