@@ -2,12 +2,15 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from django.forms import model_to_dict
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 
-from app.forms import LoginForm, UserForm
+from app.forms import LoginForm, SettingsForm
 
 
 def index(request):
@@ -31,7 +34,7 @@ def hot(request):
 
 
 def question(request, number):
-    return render(request, "question.html", {question[number]})
+    return render(request, "question.html", {'question': questions[number]})
 
 
 # @login_required()
@@ -46,9 +49,9 @@ def question(request, number):
 def login(request):
     print(request.POST)
     if request.method == 'GET':
-        form = UserForm()
+        form = LoginForm()
     elif request.method == 'POST':
-        form = UserForm(data=request.POST)
+        form = LoginForm(data=request.POST)
         if form.is_valid():
             user = auth.authenticate(**form.cleaned_data)
             print(user)
@@ -63,11 +66,27 @@ def login(request):
 @login_required
 def settings(request):
     if request.method == 'GET':
-        user_form = UserForm(data={'username': request.user.username})
+        initial_data = model_to_dict(request.user)
+        initial_data['avatar'] = request.user.profile.avatar
+        form = SettingsForm(initial=initial_data)
     elif request.method == 'POST':
-        user = User.objects.get(request.user.id)
-        user.set_password()
+        form = SettingsForm(data=request.POST, instance=request.user, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            redirect(reverse('settings'))
+    return render(request, "settings.html", {'form': form})
 
 
 def logout(request):
     auth.logout(request)
+
+
+@login_required
+@require_POST
+def vote(request):
+    question_id = request.POST['id']
+    q = Question.objects.get(question_id)
+    like = Like.objects.create(user=request.user, question=q)
+    q.rating += 1
+    q.save()
+    return JsonResponse({})

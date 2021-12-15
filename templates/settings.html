@@ -1,0 +1,17 @@
+{% extends "incl/base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <h4>Settings</h4>
+    <form novalidate class="form mt-5" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        {% endbuttons %}
+    </form>
+    <p></p>
+    <img class="avatar" src="{{ request.user.profile.avatar.url }}">
+{% endblock content %}
+
