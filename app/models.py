@@ -3,7 +3,7 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
-    test_field = models.CharField(max_length=256)
+    test_field = models.CharField(max_length=3)
 
 
 # class Profile(models.Model):

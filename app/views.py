@@ -1,4 +1,5 @@
 from django.contrib import auth
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
@@ -7,11 +8,12 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_protect
 
 from app.forms import LoginForm, RegistrationForm
 
 
-@login_required()
+@login_required(login_url='login/', redirect_field_name='continue')
 def index(request):
     return render(request, "index.html", {})
 
@@ -54,25 +56,27 @@ def settings(request):
         user.set_password()
 
 
-def login(request):
+@csrf_protect
+def log_in(request):
     print(request.GET)
     print(request.POST)
     if request.method == 'GET':
-        user_form = LoginForm()
-    if request.method == 'POST':
-        user_form = LoginForm(request.POST)
-        if user_form.is_valid():
-            user = auth.authenticate(request=request, **user_form.cleaned_data)
+        login_form = LoginForm()
+    elif request.method == 'POST':
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            user = auth.authenticate(request=request, **login_form.cleaned_data)
             if user:
+                login(request, user)
                 print('success!')
-                return redirect(reverse("index"))
-            else:
-                user_form.add_error(field=None, error="Wrong username or password!")
-    return render(request, "login.html", {'form': user_form})
+                return redirect(request.GET.get('continue'))
+            login_form.add_error(None, "Invalid username or password")
 
+    return render(request, "login.html", context={'form': login_form})
 
 def logout(request):
     auth.logout(request)
+    return redirect(reverse('login'))
 
 
 def signup(request):

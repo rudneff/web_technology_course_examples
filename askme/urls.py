@@ -23,11 +23,12 @@ urlpatterns = [
     path('hot/', views.hot, name="hot"),
     path('question/<int:number>', views.question, name="question"),
     path('new/', views.index, name="new"),
-    path('login/', views.login, name='login'),
+    path('login/', views.log_in, name='login'),
     path('signup/', views.signup, name='signup'),
-    path('', views.index, name="index")
+    path('', views.index, name="index"),
+    path('logout/', views.logout, name="logout")
 ]
 
-urlpatterns += [
-    path('catalog/', include('catalog.urls')),
-]
+# urlpatterns += [
+#     path('catalog/', include('catalog.urls')),
+# ]
