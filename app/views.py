@@ -2,14 +2,16 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse
 
-from app.forms import LoginForm, UserForm
+from app.forms import LoginForm, RegistrationForm
 
 
+@login_required()
 def index(request):
     return render(request, "index.html", {})
 
@@ -43,23 +45,6 @@ def question(request, number):
 #             q.save()
 
 
-def login(request):
-    print(request.POST)
-    if request.method == 'GET':
-        form = UserForm()
-    elif request.method == 'POST':
-        form = UserForm(data=request.POST)
-        if form.is_valid():
-            user = auth.authenticate(**form.cleaned_data)
-            print(user)
-            if not user:
-                form.add_error(None, "User not found.")
-            else:
-                auth.login(request, user)
-                return redirect(reverse('new'))
-    return render(request, "login.html", {'form': form})
-
-
 @login_required
 def settings(request):
     if request.method == 'GET':
@@ -69,5 +54,36 @@ def settings(request):
         user.set_password()
 
 
+def login(request):
+    print(request.GET)
+    print(request.POST)
+    if request.method == 'GET':
+        user_form = LoginForm()
+    if request.method == 'POST':
+        user_form = LoginForm(request.POST)
+        if user_form.is_valid():
+            user = auth.authenticate(request=request, **user_form.cleaned_data)
+            if user:
+                print('success!')
+                return redirect(reverse("index"))
+            else:
+                user_form.add_error(field=None, error="Wrong username or password!")
+    return render(request, "login.html", {'form': user_form})
+
+
 def logout(request):
     auth.logout(request)
+
+
+def signup(request):
+    if request.method == 'GET':
+        user_form = RegistrationForm()
+    if request.method == 'POST':
+        user_form = RegistrationForm(request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            if user:
+                return redirect(reverse('index'))
+            else:
+                user_form.add_error(field=None, error="User saving error!")
+    return render(request, "signup.html", {'form': user_form})
