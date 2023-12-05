@@ -30,6 +30,6 @@ class RegistrationForm(forms.ModelForm):
         model = CustomUser
         fields = ['username', 'first_name', 'last_name', 'test_field', 'password']
 
-    def save(self):
+    def save(self, **kwargs):
         self.cleaned_data.pop('password_check')
         return CustomUser.objects.create_user(**self.cleaned_data)
